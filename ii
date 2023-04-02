@@ -1,0 +1,12 @@
+import sqlite3
+conn = sqlite3.connect('habits.db')
+def add_habit_to_db(user_id, habit_name):
+    with conn:
+        c = conn.cursor()
+        c.execute("INSERT INTO habits(user_id, name) VALUES (?, ?)", (user_id, habit_name))
+
+def get_habits_for_user(user_id):
+    with conn:
+        c = conn.cursor()
+        c.execute("SELECT * FROM habits WHERE user_id=?", (user_id,))
+        return c.fetchall()
